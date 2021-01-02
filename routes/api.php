@@ -16,10 +16,6 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::get('/unauthenticated', function() {
     return response()
         ->json(['error' => 'User is not logged in'])
@@ -27,13 +23,20 @@ Route::get('/unauthenticated', function() {
 })->name('login');
 
 Route::post('/user', [AuthController::class, 'signUp']);
-Route::post('/auth/login', [AuthController::class, 'login']);
-Route::middleware('auth:api')->post(
-    '/auth/logout', [AuthController::class, 'logout']
-);
-Route::middleware('auth:api')->get(
-    '/auth/me', [AuthController::class, 'me']
-);
+
+Route::prefix('/auth')->group(function() {
+
+    Route::post('/login', [AuthController::class, 'login']);
+
+    Route::middleware('auth:api')->post(
+        '/logout', [AuthController::class, 'logout']
+    );
+
+    Route::middleware('auth:api')->get(
+        '/me', [AuthController::class, 'me']
+    );
+
+});
 
 Route::middleware('auth:api')->prefix('/todos')->group(function() {
 
