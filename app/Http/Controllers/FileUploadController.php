@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 class FileUploadController extends Controller
 {
-    public function index(Request $request) {
+    public function uploadAndStoreFile(Request $request) {
 
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:jpg,png'

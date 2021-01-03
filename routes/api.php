@@ -23,7 +23,7 @@ Route::get('/unauthenticated', function() {
         ->setStatusCode(401);
 })->name('login');
 
-Route::post('/upload', [FileUploadController::class, 'index']);
+Route::post('/upload', [FileUploadController::class, 'uploadAndStoreFile']);
 
 Route::post('/user', [AuthController::class, 'signUp']);
 
