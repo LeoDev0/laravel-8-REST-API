@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileUploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ Route::get('/unauthenticated', function() {
         ->json(['error' => 'User is not logged in'])
         ->setStatusCode(401);
 })->name('login');
+
+Route::post('/upload', [FileUploadController::class, 'index']);
 
 Route::post('/user', [AuthController::class, 'signUp']);
 
