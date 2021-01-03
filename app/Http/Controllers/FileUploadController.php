@@ -20,24 +20,17 @@ class FileUploadController extends Controller
                 ->setStatusCode(400);
         }
 
-        if ($request->hasFile('file')) {
-            if ($request->file('file')->isValid()) {
-                $file = $request->file('file')->store('public');
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $file = $request->file('file')->store('public');
 
-                $url = asset(Storage::url($file));
+            $url = asset(Storage::url($file));
 
-                return response()
-                    ->json(['url' => $url]);
-            } else {
-                return response()
-                    ->json(['error' => 'File upload failed'])
-                    ->setStatusCode(400);
-            }
-
-        } else {
             return response()
-                ->json(['error' => 'No file found'])
-                ->setStatusCode(400);
+                ->json(['url' => $url]);
         }
+
+        return response()
+            ->json(['error' => 'No file found'])
+            ->setStatusCode(400);
     }
 }
